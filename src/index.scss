@@ -15,6 +15,7 @@ body {
 
 button {
   background-color: #9ac5d3;
+  color: #141e26;
   font-size: 1rem;
 
   &:hover {
@@ -28,12 +29,13 @@ div {
   justify-content: center;
   align-items: center;
   gap: 3rem;
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 h1 {
-  font-size: clamp(1.5rem, 4rem, 8rem);
+  font-size: clamp(1rem, 4rem, 6rem);
   margin: 0;
+  text-align: center;
 }
 
 .easy {
@@ -54,9 +56,10 @@ h1 {
   grid-template-rows: repeat(24, minmax(2rem, 1fr));
 }
 
-button.clicked {
+button.reveal {
   all: unset;
   background-color: #cbd8df;
+  border: 1px solid #eaeaea;
   color: #141e26;
   text-align: center;
   font-size: 1.5rem;
