@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-type Square = '_' | 'F' | ' ' | '*' | '@' | number
+type Square = '_' | 'F' | '💣' | ' ' | '*' | '@' | number
 type Row = [Square, Square, Square, Square, Square, Square, Square, Square]
 type Board = [Row, Row, Row, Row, Row, Row, Row, Row]
 type Game = {
@@ -117,6 +117,26 @@ export function App() {
       return `Game ${game.state}`
   }
 
+  function changeCellValue(value: string | number) {
+    if (value === 'F') {
+      return '⛳️'
+    }
+
+    if (value === '*') {
+      return '💥'
+    }
+
+    if (value === '@') {
+      return '💣'
+    }
+
+    if(value === '_') {
+      return ''
+    }
+    
+    return value
+  }
+
   const header = game.state ? newHeader() : 'Minesweeper'
 
   return (
@@ -134,7 +154,7 @@ export function App() {
               className={cell === ' ' || cell === 'F' ? undefined : 'reveal'}
               onClick={() => handleClickCell(rowIndex, columnIndex)}
               onContextMenu={(event) => handleRightClick(event, rowIndex, columnIndex)}>
-              {cell}
+              {changeCellValue(cell)}
             </button>
             )
           })

@@ -33,15 +33,15 @@ div {
 }
 
 h1 {
-  font-size: clamp(1rem, 4rem, 6rem);
+  font-size: clamp(1rem, 3.5rem, 6rem);
   margin: 0;
   text-align: center;
 }
 
 .easy {
   display: grid;
-  grid-template-columns: repeat(8, minmax(2rem, 1fr));
-  grid-template-rows: repeat(8, minmax(2rem, 1fr));
+  grid-template-columns: repeat(8, minmax(2.5rem, 1fr));
+  grid-template-rows: repeat(8, minmax(2.5rem, 1fr));
 }
 
 .medium {
@@ -64,4 +64,8 @@ button.reveal {
   text-align: center;
   font-size: 1.5rem;
   cursor: not-allowed;
+}
+
+.invisible {
+  display: none;
 }
