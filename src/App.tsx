@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-type Square = '_' | 'F' | '💣' | ' ' | '*' | '@' | number
+type Square = '_' | 'F' | ' ' | '*' | '@' | number
 type Row = [Square, Square, Square, Square, Square, Square, Square, Square]
 type Board = [Row, Row, Row, Row, Row, Row, Row, Row]
 type Game = {
@@ -110,9 +110,9 @@ export function App() {
 
   function newHeader() {
     if(game.state === "new") {
-      return `New game started. Find ${game.mines} 💣`
+      return `New game started.`
     } else if(game.state === "playing") {
-      return `Minesweeping in progress. ${game.mines} 💣 left`
+      return `Minesweeping in progress.`
     } else if(game.state === 'won' || game.state === 'lost')
       return `Game ${game.state}`
   }
@@ -133,7 +133,7 @@ export function App() {
     if(value === '_') {
       return ''
     }
-    
+
     return value
   }
 
@@ -142,7 +142,9 @@ export function App() {
   return (
     <div>
       <header>
-        <h1>{header} - <button onClick={handleNewGame}>New Game</button></h1>
+        <h1>{header}</h1>
+        <button onClick={handleNewGame}>New Game</button>
+        <h2>Mines: {game.mines}</h2>
       </header>
 
       <main className='easy'>
@@ -162,7 +164,7 @@ export function App() {
       </main>
 
       <footer>
-        <h2>Made with 🫶🏽 in Florida</h2>
+        <h3>Made with 🫶🏽 in Florida</h3>
       </footer>
     </div>
   )
