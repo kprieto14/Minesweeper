@@ -1,3 +1,5 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+
 :root {
   font: 16px / 1 sans-serif;
   background-color: #1e5067;
@@ -37,8 +39,9 @@ h1 {
   margin: 0;
 }
 
-h2 {
+h2, h3 {
   margin: 0;
+  font-size: 1.5rem;
 }
 
 header {
@@ -46,22 +49,27 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+
+  & button {
+    margin: .5rem;
+    padding: .3rem;
+  }
 }
 
-.easy {
+.difficulty-0 {
   display: grid;
   grid-template-columns: repeat(8, minmax(2.5rem, 1fr));
   grid-template-rows: repeat(8, minmax(2.5rem, 1fr));
 }
 
-.medium {
+.difficulty-1 {
   display: grid;
-  grid-template-columns: repeat(10, minmax(2rem, 1fr));
-  grid-template-rows: repeat(10, minmax(2rem, 1fr));
+  grid-template-columns: repeat(16, minmax(2rem, 1fr));
+  grid-template-rows: repeat(16, minmax(2rem, 1fr));
 }
 
-.hard {
+.difficulty-2 {
   display: grid;
   grid-template-columns: repeat(24, minmax(2rem, 1fr));
   grid-template-rows: repeat(24, minmax(2rem, 1fr));

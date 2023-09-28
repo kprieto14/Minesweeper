@@ -29,6 +29,8 @@ export function App() {
     mines: null
   })
 
+  const [difficulty, setDifficulty] = useState<0 | 1 | 2>(0)
+
   async function handleClickCell(row: number, col: number) {
     if (
       // No game id
@@ -60,19 +62,22 @@ export function App() {
     }
   }
 
-  async function handleNewGame() {
+  async function handleNewGame(newDifficulty: 0 | 1 | 2) {
+    const gameOptions = { difficulty: newDifficulty }
     // Make a POST request to ask for a new game
     const response = await fetch(
       'https://minesweeper-api.herokuapp.com/games',
       {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(gameOptions)
       }
     )
     if (response.ok) {
       // Get the response as JSON
       const newGame = await response.json() as Game
       // Make that the new state!
+      setDifficulty(newDifficulty)
       setGame(newGame)
     }
   }
@@ -119,7 +124,7 @@ export function App() {
 
   function changeCellValue(value: string | number) {
     if (value === 'F') {
-      return '⛳️'
+      return <i className="fa fa-flag" />
     }
 
     if (value === '*') {
@@ -127,7 +132,7 @@ export function App() {
     }
 
     if (value === '@') {
-      return '💣'
+      return <i className="fa fa-bomb" />
     }
 
     if(value === '_') {
@@ -143,11 +148,15 @@ export function App() {
     <div>
       <header>
         <h1>{header}</h1>
-        <button onClick={handleNewGame}>New Game</button>
-        <h2>Mines: {game.mines}</h2>
+        <h2>
+         <button onClick={() => handleNewGame(0)}>New Easy Game</button>
+         <button onClick={() => handleNewGame(1)}>New Medium Game</button>
+         <button onClick={() => handleNewGame(2)}>New Hard Game</button>
+        </h2>
+        <h3>Mines: {game.mines}</h3>
       </header>
 
-      <main className='easy'>
+      <main className={`difficulty-${difficulty}`}>
         {game.board.map((boardRow, rowIndex) => {
         return boardRow.map((cell, columnIndex) => {
           return (
