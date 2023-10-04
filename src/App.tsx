@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { Cell } from './components/Cell'
 
-type Square = '_' | 'F' | ' ' | '*' | '@' | number
+type Square = '_' | 'F' | ' ' | '*' | '@' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'
 type Row = [Square, Square, Square, Square, Square, Square, Square, Square]
 type Board = [Row, Row, Row, Row, Row, Row, Row, Row]
 type Game = {
@@ -31,7 +32,7 @@ export function App() {
 
   const [difficulty, setDifficulty] = useState<0 | 1 | 2>(0)
 
-  async function handleClickCell(row: number, col: number) {
+  async function recordMove(row: number, col: number) {
     if (
       // No game id
       game.id === undefined ||
@@ -82,7 +83,7 @@ export function App() {
     }
   }
 
-  async function handleRightClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, row: number, col: number) {
+  async function recordFlag(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, row: number, col: number) {
     event.preventDefault()
 
     if (
@@ -122,26 +123,6 @@ export function App() {
       return `Game ${game.state}`
   }
 
-  function changeCellValue(value: string | number) {
-    if (value === 'F') {
-      return <i className="fa fa-flag" />
-    }
-
-    if (value === '*') {
-      return '💥'
-    }
-
-    if (value === '@') {
-      return <i className="fa fa-bomb" />
-    }
-
-    if(value === '_') {
-      return ''
-    }
-
-    return value
-  }
-
   const header = game.state ? newHeader() : 'Minesweeper'
 
   return (
@@ -160,13 +141,14 @@ export function App() {
         {game.board.map((boardRow, rowIndex) => {
         return boardRow.map((cell, columnIndex) => {
           return (
-            <button
+            <Cell
               key={columnIndex}
-              className={cell === ' ' || cell === 'F' ? undefined : 'reveal'}
-              onClick={() => handleClickCell(rowIndex, columnIndex)}
-              onContextMenu={(event) => handleRightClick(event, rowIndex, columnIndex)}>
-              {changeCellValue(cell)}
-            </button>
+              rowIndex={rowIndex}
+              columnIndex={columnIndex}
+              cell={game.board[rowIndex][columnIndex]}
+              recordMove={recordMove}
+              recordFlag={recordFlag}
+              />
             )
           })
         })}

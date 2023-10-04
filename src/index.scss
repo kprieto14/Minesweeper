@@ -18,7 +18,7 @@ body {
 button {
   background-color: #9ac5d3;
   color: #141e26;
-  font-size: 1rem;
+  font-size: clamp(.5rem, 1rem, 2rem);
 
   &:hover {
     cursor: pointer;
@@ -83,8 +83,4 @@ button.reveal {
   text-align: center;
   font-size: 1.5rem;
   cursor: not-allowed;
-}
-
-.invisible {
-  display: none;
 }
