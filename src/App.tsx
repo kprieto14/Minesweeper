@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Cell } from './components/Cell'
 
 type Square = '_' | 'F' | ' ' | '*' | '@' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'
 type Row = [Square, Square, Square, Square, Square, Square, Square, Square]
 type Board = [Row, Row, Row, Row, Row, Row, Row, Row]
+type GameDifficulty = 0 | 1 | 2
 type Game = {
   board: Board
   id: null | number
-  difficulty: null | number
+  difficulty: GameDifficulty
   state: null | string
   mines: null | number
 }
@@ -25,12 +26,34 @@ export function App() {
       [' ',' ',' ',' ',' ',' ',' ',' ']
     ],
     id: null,
-    difficulty: null,
+    difficulty: 0,
     state: null,
     mines: null
   })
 
-  const [difficulty, setDifficulty] = useState<0 | 1 | 2>(0)
+  const [difficulty, setDifficulty] = useState<GameDifficulty>(0)
+
+  useEffect(function() {
+    async function loadExistingGame() {
+      const existingGameId = localStorage.getItem('game-id')
+      const existingGameDifficulty = localStorage.getItem('game-difficulty')
+
+      if(existingGameId && existingGameDifficulty) {
+        const response = await fetch(
+          `https://minesweeper-api.herokuapp.com/games/${existingGameId}`
+        )
+
+        if(response.ok) {
+          const gameJson = await response.json()
+
+          setGame(gameJson)
+          setDifficulty(Number(existingGameDifficulty) as GameDifficulty)
+        }
+      }
+    }
+
+    loadExistingGame()
+  }, [])
 
   async function recordMove(row: number, col: number) {
     if (
@@ -63,7 +86,7 @@ export function App() {
     }
   }
 
-  async function handleNewGame(newDifficulty: 0 | 1 | 2) {
+  async function handleNewGame(newDifficulty: GameDifficulty) {
     const gameOptions = { difficulty: newDifficulty }
     // Make a POST request to ask for a new game
     const response = await fetch(
@@ -80,6 +103,8 @@ export function App() {
       // Make that the new state!
       setDifficulty(newDifficulty)
       setGame(newGame)
+      localStorage.setItem('game-id', String(newGame.id))
+      localStorage.setItem('game-difficulty', String(newDifficulty))
     }
   }
 

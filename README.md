@@ -2,3 +2,5 @@ Implementation of a minesweeper game by communicating with a back-end API server
 
 Deployed at: https://kpminsweeper.netlify.app
 
+Ideas to implement: 
+    -Do local storage 
